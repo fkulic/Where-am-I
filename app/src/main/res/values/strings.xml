@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Where am I?</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="country">Country</string>
+    <string name="locality">Locality</string>
+    <string name="address">Address</string>
+    <string name="imHere">I\'m here!</string>
+    <string name="notFound">Not found</string>
 </resources>

@@ -5,15 +5,110 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="8dp"
     tools:context="com.fkulic.whereami.MainActivity">
 
+    <android.support.constraint.Guideline
+        android:id="@+id/leftGuideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="8dp"/>
+
     <TextView
+        android:id="@+id/tvLatitudeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="@string/latitude"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@+id/leftGuideline"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvLatitudeValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/marginLeftValues"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvLatitudeLabel"
+        app:layout_constraintLeft_toRightOf="@+id/tvLatitudeLabel"/>
+
+    <TextView
+        android:id="@+id/tvLongitudeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/longitude"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@+id/leftGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/tvLatitudeLabel"/>
+
+    <TextView
+        android:id="@+id/tvLongitudeValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/tvLongitudeLabel"
+        android:layout_marginLeft="@dimen/marginLeftValues"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvLongitudeLabel"/>
+
+    <TextView
+        android:id="@+id/tvCountryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/country"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@+id/leftGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/tvLongitudeLabel"/>
+
+    <TextView
+        android:id="@+id/tvCountryValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/tvCountryLabel"
+        android:layout_marginLeft="@dimen/marginLeftValues"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvCountryLabel"/>
+
+    <TextView
+        android:id="@+id/tvLocalityLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/locality"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@+id/leftGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/tvCountryLabel"/>
+
+    <TextView
+        android:id="@+id/tvLocalityValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/tvLocalityLabel"
+        android:layout_marginLeft="@dimen/marginLeftValues"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvLocalityLabel"/>
+
+    <TextView
+        android:id="@+id/tvAddressLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/address"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@+id/leftGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/tvLocalityLabel"/>
+
+    <TextView
+        android:id="@+id/tvAddressValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/tvAddressLabel"
+        android:layout_marginLeft="@dimen/marginLeftValues"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvAddressLabel"/>
+
+    <fragment
+        android:id="@+id/fGoogleMaps"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/tvAddressLabel"/>
 
 </android.support.constraint.ConstraintLayout>
