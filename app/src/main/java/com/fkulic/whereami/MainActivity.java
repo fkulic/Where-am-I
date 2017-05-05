@@ -7,6 +7,9 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +34,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final int PERMISSION_REQ_FINE_LOC = 10;
     GoogleMap mGoogleMap;
     SupportMapFragment mMapFragment;
+    SoundPool mSoundPool;
+    private boolean mSoundsLoaded = false;
+    private int mBlopSoundID;
 
 
     TextView tvLatitudeValue;
@@ -49,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.setUpUI();
+        this.loadSounds();
     }
 
     private void setUpUI() {
@@ -62,13 +69,30 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.mGoogleMapClickListener = new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
+                mSoundPool.play(mBlopSoundID, 1, 1, 1, 0, 1);
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_new));
-                markerOptions.title("New marker");
                 markerOptions.position(latLng);
                 mGoogleMap.addMarker(markerOptions);
             }
         };
+    }
+
+    private void loadSounds() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            this.mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        } else {
+            this.mSoundPool = new SoundPool.Builder().setMaxStreams(1).build();
+        }
+
+        this.mSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                mSoundsLoaded = true;
+            }
+        });
+
+        this.mBlopSoundID = this.mSoundPool.load(this, R.raw.blop, 1);
     }
 
     @Override
