@@ -7,4 +7,8 @@
     <string name="address">Address</string>
     <string name="imHere">I\'m here!</string>
     <string name="notFound">Not found</string>
+    <string name="takeAPhoto">Take a photo</string>
+    <string name="errorCantCreateDir">Can\'t create directory to save image.</string>
+    <string name="errImgCouldntBeSaved">Image could not be saved.</string>
+    <string name="noCamFound">No camera found.</string>
 </resources>
