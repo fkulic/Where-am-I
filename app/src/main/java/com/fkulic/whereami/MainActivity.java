@@ -48,7 +48,6 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
     private static final String TAG = "MainActivity";
     private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final String NOTIFICATION_MSG_KEY = "notification_message";
     private static final int PERMISSION_REQ_FINE_LOC = 10;
     private static final int PERMISSION_REQ_WRITE_EXT = 11;
     GoogleMap mGoogleMap;
@@ -249,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .setContentText(messageTxt)
                 .setSmallIcon(android.R.drawable.ic_menu_camera)
                 .setContentIntent(pi)
-                .setLights(Color.CYAN, 1000, 3000)
+                .setLights(Color.GREEN, 1000, 3000)
                 .setVibrate(new long[] { 500,110,500,110,450,110,200,110,170,40,450,110,200,110,170,40,500 })
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
         Notification notification = builder.build();

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary_light"
     android:paddingTop="8dp"
     tools:context="com.fkulic.whereami.MainActivity">
 
@@ -114,7 +115,8 @@
     <ImageButton
         android:id="@+id/ibTakePhoto"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
+        android:background="@color/colorPrimary"
         android:contentDescription="@string/takeAPhoto"
         android:src="@drawable/cam_icon"
         app:layout_constraintBottom_toBottomOf="parent"
