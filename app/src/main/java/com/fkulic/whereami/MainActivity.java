@@ -1,14 +1,18 @@
 package com.fkulic.whereami;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.AudioManager;
+import android.media.RingtoneManager;
 import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Build;
@@ -16,6 +20,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -41,14 +47,17 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
     private static final String TAG = "MainActivity";
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final String NOTIFICATION_MSG_KEY = "notification_message";
     private static final int PERMISSION_REQ_FINE_LOC = 10;
-    public static final int PERMISSION_REQ_WRITE_EXT = 11;
+    private static final int PERMISSION_REQ_WRITE_EXT = 11;
     GoogleMap mGoogleMap;
     SupportMapFragment mMapFragment;
     SoundPool mSoundPool;
     private boolean mSoundsLoaded = false;
     private int mBlopSoundID;
+
+    NotificationManagerCompat mNotificationManager;
 
     String mPhotoPath;
 
@@ -69,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_main);
         this.setUpUI();
         this.loadSounds();
+        this.mNotificationManager = NotificationManagerCompat.from(this);
     }
 
     private void setUpUI() {
@@ -213,11 +223,38 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //delete if picture wasn't taken
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode != RESULT_OK) {
-            File image = new File(mPhotoPath);
-            image.delete();
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+            if (resultCode == RESULT_OK) {
+                sendNotificationPictureTaken();
+            } else {
+                //delete if picture wasn't taken
+                File image = new File(mPhotoPath);
+                image.delete();
+            }
         }
+    }
+
+    private void sendNotificationPictureTaken() {
+        String messageTxt = mPhotoPath;
+
+        Intent notificationIntent = new Intent();
+        notificationIntent.setAction(Intent.ACTION_VIEW);
+        notificationIntent.setDataAndType(Uri.parse("file://" + mPhotoPath), "image/*");
+
+        PendingIntent pi = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setAutoCancel(true)
+                .setContentTitle(getString(R.string.newPhoto))
+                .setContentText(messageTxt)
+                .setSmallIcon(android.R.drawable.ic_menu_camera)
+                .setContentIntent(pi)
+                .setLights(Color.CYAN, 1000, 3000)
+                .setVibrate(new long[] { 500,110,500,110,450,110,200,110,170,40,450,110,200,110,170,40,500 })
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+        Notification notification = builder.build();
+
+        mNotificationManager.notify(0, notification);
     }
 
     @Override

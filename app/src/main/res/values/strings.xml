@@ -11,4 +11,5 @@
     <string name="errorCantCreateDir">Can\'t create directory to save image.</string>
     <string name="errImgCouldntBeSaved">Image could not be saved.</string>
     <string name="noCamFound">No camera found.</string>
+    <string name="newPhoto">New photo!</string>
 </resources>
